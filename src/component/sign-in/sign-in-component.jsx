@@ -1,6 +1,7 @@
 import FormInput from '../../component/form-input/form-input.component';
 import { useState } from 'react';
-import Button from '../button/button.component';
+// import UserContext from '../../contexts/user.context';
+import Button, {BUTTON_TYPE_CLASSES} from '../button/button.component';
 import { signInWithGooglePopup, 
     createUserDocumentFromAuth,
     signInAuthUserWithEmailAndPassword }from '../../utils/firebase/firebase.utils'
@@ -15,19 +16,23 @@ const SignIn=() => {
     const resetSignField=()=> {
     setSignField(defaultsignField)
     }
+    // const { setCurrentUser} =useContext(UserContext)
     const handleChange=(event)=> {
         const  {name, value}=event.target;
         setSignField({...signField,[name]:value})}
         const signInWithGoogle=async() => {
             const {user } = await signInWithGooglePopup();
-            await createUserDocumentFromAuth(user)
+            // setCurrentUser(user)
+            
         }
+   
         
     const handleSubmit=async(event)=> {
         event.preventDefault();
             
         try{
-            const response = await signInAuthUserWithEmailAndPassword(email,password)
+            const {user} = await signInAuthUserWithEmailAndPassword(email,password)
+            // setCurrentUser(user)
         resetSignField();
         }
         catch(error) {
@@ -61,8 +66,8 @@ const SignIn=() => {
                    value={password} 
                    onChange={handleChange} />
             <div className='button-container'>
-                <Button onClick={handleSubmit} type="submit" buttonType='inverted'>Sign In</Button>
-                <Button type='button' buttonType='google' onClick={signInWithGoogle}>Google sign in</Button>
+                <Button onClick={handleSubmit} type="submit" >Sign In</Button>
+                <Button type='button' buttonType={BUTTON_TYPE_CLASSES.google} onClick={signInWithGoogle}>Google sign in</Button>
             </div>
                    
         </div>
