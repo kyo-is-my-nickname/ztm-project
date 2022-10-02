@@ -20,7 +20,7 @@ const SignUp = ()=> {
     // const { currentUser,setCurrentUser }=useContext(UserContext)
     const handleSubmit=async(event)=> {
     event.preventDefault();
-    if(password ==!confirmPassword) {
+    if(password !==confirmPassword) {
         alert('password is not match');
         return}
 
@@ -71,7 +71,7 @@ const SignUp = ()=> {
                name="confirmPassword" 
                value={confirmPassword} 
                onChange={handleChange} />
-     <Button buttonType='inverted' type="submit" >Sign Up </Button>
+     <Button type="submit" >Sign Up </Button>
     </form>
     </div>
     

@@ -1,7 +1,7 @@
 import FormInput from '../../component/form-input/form-input.component';
 import { useState } from 'react';
 // import UserContext from '../../contexts/user.context';
-import Button from '../button/button.component';
+import Button, {BUTTON_TYPE_CLASSES} from '../button/button.component';
 import { signInWithGooglePopup, 
     createUserDocumentFromAuth,
     signInAuthUserWithEmailAndPassword }from '../../utils/firebase/firebase.utils'
@@ -66,8 +66,8 @@ const SignIn=() => {
                    value={password} 
                    onChange={handleChange} />
             <div className='button-container'>
-                <Button onClick={handleSubmit} type="submit" buttonType='inverted'>Sign In</Button>
-                <Button type='button' buttonType='google' onClick={signInWithGoogle}>Google sign in</Button>
+                <Button onClick={handleSubmit} type="submit" >Sign In</Button>
+                <Button type='button' buttonType={BUTTON_TYPE_CLASSES.google} onClick={signInWithGoogle}>Google sign in</Button>
             </div>
                    
         </div>
