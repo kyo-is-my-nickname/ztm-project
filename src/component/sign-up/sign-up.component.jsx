@@ -1,8 +1,10 @@
 import { useState } from "react";
-import {createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils'
+import { useDispatch } from "react-redux";
+// import {createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils'
 import FormInput from "../form-input/form-input.component";
 import './sign-up.styles.scss'
 import Button from "../button/button.component";
+import { signUpStart } from "../../store/user/user.action";
 // import UserContext from "../../contexts/user.context";
 const defaultsignField={
     displayName:'',
@@ -12,6 +14,7 @@ const defaultsignField={
 }
 
 const SignUp = ()=> {
+    const dispatch=useDispatch()
     const [signField,setSignField]=useState(defaultsignField);
     const {displayName, email, password, confirmPassword}=signField;
     const resetSignField=()=> {
@@ -25,8 +28,10 @@ const SignUp = ()=> {
         return}
 
     try{
-     const {user} = await createAuthUserWithEmailAndPassword(email, password)
-     await createUserDocumentFromAuth(user, {displayName})
+        dispatch(signUpStart(email,password, displayName))
+
+    //  const {user} = await createAuthUserWithEmailAndPassword(email, password)
+    //  await createUserDocumentFromAuth(user, {displayName})
     //  setCurrentUser(user);
     //  console.log(currentUser)
      resetSignField();
@@ -38,7 +43,6 @@ const SignUp = ()=> {
      else {
      console.log("user creation have an error", error) }
 }    }
-
     const handleChange=(event)=> {
      const  {name, value}=event.target;
      setSignField({...signField,[name]:value})
@@ -74,6 +78,5 @@ const SignUp = ()=> {
      <Button type="submit" >Sign Up </Button>
     </form>
     </div>
-    
 }
 export default SignUp

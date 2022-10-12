@@ -1,17 +1,23 @@
 import { Link } from 'react-router-dom'
 import { useContext, Fragment } from 'react'
-import CategoriesContext from '../../contexts/categories.context'
+import {useSelector} from 'react-redux'
+import { selectCategoriesMap } from '../../store/categories/categories.selector' 
+// import CategoriesContext from '../../contexts/categories.context'
 import ProductCard from '../../component/product-card/product-card.component'
 import './categories-preview.styles.scss'
+import { selectCategoriesIsLoading } from '../../store/categories/categories.selector'
+import Spinner from '../../component/spinner/spinner.component'
 // import './shop.styles.scss'
 const CategoriesPreview=()=> {
-const {categoriesMap}=useContext(CategoriesContext)
+// const {categoriesMap}=useContext(CategoriesContext)
+const categoriesMap=useSelector(selectCategoriesMap)
+const isLoading=useSelector(selectCategoriesIsLoading)
     return (
         <Fragment>
-            {Object.keys(categoriesMap).map((title) => (
+        {isLoading ? <Spinner/> : 
+        Object.keys(categoriesMap).map((title) => (
                 <Fragment key={title}>
-                <Link className='title' to={title}><h2>{title}</h2></Link>
-                    
+                <Link className='title' to={title}><h2>{title}</h2></Link>  
                     <div className='product-container'>
                       {categoriesMap[title].map((product)=> {
                        return <div key={product.id}>
@@ -19,7 +25,9 @@ const {categoriesMap}=useContext(CategoriesContext)
                             </div>}
             )}
     </div>
-                </Fragment>))}
+                </Fragment>))
+        }
+            
         </Fragment>
 
     )

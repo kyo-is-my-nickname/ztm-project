@@ -1,4 +1,5 @@
 // Import the functions you need from the SDKs you need
+import { resolveTo } from "@remix-run/router";
 import { initializeApp } from "firebase/app";
 import {
     getAuth,
@@ -53,12 +54,13 @@ export const getCategoriesAndDocuments= async () => {
   const q=query(collectionRef)
 
   const querySnapshot= await getDocs(q)
-  const categoryMap = querySnapshot.docs.reduce((acc,docSnapshot)=> {
-    const {title, items} = docSnapshot.data();
-    acc[title.toLowerCase()]=items
-    return acc
-  }, {})
-  return categoryMap
+  return querySnapshot.docs.map(docSnapshot=>docSnapshot.data())
+  // const categoryMap =querySnapshot.docs.reduce((acc,docSnapshot)=> {
+  //   const {title, items} = docSnapshot.data();
+  //   acc[title.toLowerCase()]=items
+  //   return acc
+  // }, {})
+  // return categoryMap
 }
 export const createUserDocumentFromAuth = async (	
     userAuth,	
@@ -81,7 +83,7 @@ export const createUserDocumentFromAuth = async (
         console.log("error creating the user", error.message);
         }
     }
-    return userDocRef
+    return userSnapshot
 }
 
 export const createAuthUserWithEmailAndPassword= async (email, password)=>{
@@ -92,9 +94,18 @@ export const signInAuthUserWithEmailAndPassword= async (email, password)=>{
     if (!email || !password) return;
     return await signInWithEmailAndPassword(auth, email, password)
 }
-export const signOutUser=async ()=> {
-    return await signOut(auth)
-}
+export const signOutUser = async () => await signOut(auth);
 export const onAuthStateChangedListener=(callback)=> {
 onAuthStateChanged(auth,callback)
+}
+export const getCurrentUser=()=>{
+  return new Promise((resolve,reject)=>{
+    const unsubcribe=onAuthStateChanged(
+    auth,
+    (userAuth)=>{
+      unsubcribe()
+      resolve(userAuth)
+    },
+    reject)
+  })
 }
