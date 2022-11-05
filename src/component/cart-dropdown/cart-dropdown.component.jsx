@@ -2,7 +2,7 @@ import {CartDropContainer, EmtyMess, CartItems} from './cart-dropdown.styles.jsx
 // import { CartContext } from '../../contexts/cart.context'
 // import { useContext } from 'react'
 import {useSelector} from 'react-redux'
-import { selectCartItems } from '../../store/cart/cart.selector.js'
+import { selectCartItems } from '../../store/cart/cart.selector'
 import { useNavigate } from 'react-router-dom'
 import Button, {BUTTON_TYPE_CLASSES} from '../button/button.component'
 import CartItem from '../cart-item/cart-item.component'

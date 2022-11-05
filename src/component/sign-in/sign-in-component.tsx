@@ -1,5 +1,5 @@
-import FormInput from '../../component/form-input/form-input.component';
-import { useState } from 'react';
+import FormInput from '../form-input/form-input.component';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import UserContext from '../../contexts/user.context';
 import Button, {BUTTON_TYPE_CLASSES} from '../button/button.component';
@@ -8,6 +8,7 @@ import Button, {BUTTON_TYPE_CLASSES} from '../button/button.component';
 //     signInAuthUserWithEmailAndPassword }from '../../utils/firebase/firebase.utils'
 import { googleSignInStart, emailSignInStart } from '../../store/user/user.action';
 import './sign-in.styles.scss'
+import { AuthError, AuthErrorCodes } from 'firebase/auth';
 const SignIn=() => {
     const dispatch=useDispatch()
     const defaultsignField={
@@ -20,7 +21,7 @@ const SignIn=() => {
     setSignField(defaultsignField)
     }
     // const { setCurrentUser} =useContext(UserContext)
-    const handleChange=(event)=> {
+    const handleChange=(event: ChangeEvent<HTMLInputElement>)=> {
         const  {name, value}=event.target;
         setSignField({...signField,[name]:value})}
     const signInWithGoogle=async() => {
@@ -29,7 +30,7 @@ const SignIn=() => {
             // setCurrentUser(user)    
         }
         
-    const handleSubmit=async(event)=> {
+    const handleSubmit=async(event: FormEvent<HTMLFormElement>)=> {
         event.preventDefault();   
         try{
             dispatch(emailSignInStart(email, password))
@@ -38,7 +39,7 @@ const SignIn=() => {
         resetSignField();
         }
         catch(error) {
-            switch (error.code) {
+            switch ((error as AuthError).code) {
                 case 'auth/wrong-password':
                     alert('incorect password')
                 
@@ -55,7 +56,8 @@ const SignIn=() => {
         return <div className='sign-in-container'>
         <h2>I already have an account</h2>
         <span>Sign in with your email and password</span>
-            <FormInput label='Email'
+        <form onClick={handleSubmit}>
+        <FormInput label='Email'
                    type='text' 
                    required 
                    name="email" 
@@ -67,12 +69,15 @@ const SignIn=() => {
                    name="password" 
                    value={password} 
                    onChange={handleChange} />
-            <div className='button-container'>
-                <Button onClick={handleSubmit} type="submit" >Sign In</Button>
+            <div className='button-container' >
+                <Button  type="submit" >Sign In</Button>
                 <Button type='button' buttonType={BUTTON_TYPE_CLASSES.google} onClick={signInWithGoogle}>Google sign in</Button>
             </div>
-                   
-        </div>
+          
+        </form>
+            
+        </div>  
+        
             
 }
 

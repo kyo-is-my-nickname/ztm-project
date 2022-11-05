@@ -8,8 +8,11 @@ import { selectCategoriesMap } from "../../store/categories/categories.selector"
 import './category.styles.scss'
 import Spinner from "../../component/spinner/spinner.component"
 import { selectCategoriesIsLoading } from "../../store/categories/categories.selector"
+type CategoryRouteParams = {
+    category: string;
+}
 const Category=()=>{
-    const {category}=useParams()
+    const {category}=useParams<keyof CategoryRouteParams>() as CategoryRouteParams
     const categoriesMap=useSelector(selectCategoriesMap)
     const isLoading=useSelector(selectCategoriesIsLoading)
     // const {categoriesMap}=useContext(CategoriesContext)
