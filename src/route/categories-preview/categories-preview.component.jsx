@@ -13,7 +13,7 @@ const CategoriesPreview=()=> {
 const categoriesMap=useSelector(selectCategoriesMap)
 const isLoading=useSelector(selectCategoriesIsLoading)
     return (
-        <Fragment>
+        <div className='body-container'>
         {isLoading ? <Spinner/> : 
         Object.keys(categoriesMap).map((title) => (
                 <Fragment key={title}>
@@ -28,7 +28,7 @@ const isLoading=useSelector(selectCategoriesIsLoading)
                 </Fragment>))
         }
             
-        </Fragment>
+        </div>
 
     )
 }

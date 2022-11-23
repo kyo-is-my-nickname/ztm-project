@@ -5,6 +5,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import { removeItemfromCart, addItemtoCart, takeItemfromCart } from '../../store/cart/cart.action'
 import { selectCartItems } from '../../store/cart/cart.selector'
 import { memo } from 'react'
+import { Fragment } from 'react'
 const CheckoutItem=memo(({item,imageUrl,name,quantity,price})=>{
     // const {removeItemfromCart, addItemtoCart,takeItemfromCart}=useContext(CartContext)
     const dispatch=useDispatch()

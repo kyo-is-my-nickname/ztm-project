@@ -41,17 +41,17 @@ min-width: 30%;
     overflow: hidden;
   
     &:hover {
-      cursor: pointer;}
-    $(BackgroundImg) {
+      cursor: pointer;
+    ${BackgroundImg} {
       transform: scale(1.1);
         transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
-    }
-    $(BodyContainer) {
+    },
+    ${BodyContainer} {
       opacity: 0.9;
     }
-    ${'' /* &.large {
+    &.large {
       height: 380px;
-    } */}
+    }}
   
     &:first-child {
       margin-right: 7.5px;
