@@ -1,5 +1,7 @@
 import {Routes, Route} from 'react-router-dom'
-
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+import { selectCurrentUser } from './store/user/user.selector';
 import {  lazy, Suspense, useEffect } from "react";
 // import { onAuthStateChangedListener, createUserDocumentFromAuth, getCurrentUser } from "./utils/firebase/firebase.utils";
 // import { setCurrentUser } from './store/user/user.action';
@@ -28,13 +30,14 @@ function App() {
         dispatch(checkUserSession())
     },
         [dispatch])
+        const currentUser=useSelector(selectCurrentUser)
   return (
     <Suspense fallback={<Spinner/>}>
   <Routes>
   <Route path='/' element={<NavBar/>}>
     <Route index element={<Home/>} />
-    <Route path='/shop/*' element={<Shop/>}/>
-    <Route path='/auth' element={<Authentication/>}/>
+    <Route path='/shop/*' element={<Shop/>}/>  
+    <Route path='/auth' element={currentUser ? <Navigate to="/" replace /> :  <Authentication />} />
     <Route path='checkout' element={<Checkout />} />
   </Route>
   </Routes>
