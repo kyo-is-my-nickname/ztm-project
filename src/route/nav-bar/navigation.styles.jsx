@@ -9,14 +9,14 @@ export const NavigationContainer=styled.div`
   display: flex;
   background-color: white;
   z-index:1;
-  padding: 20px;
+  padding: 20px 20px 0px 20px;
   justify-content: space-between;
   margin-bottom: 25px;
 `
 export const LogoContainer=styled.div`
   height: 100%;
   width: 70px;
-  padding: 25px;
+
 `
 export const NavLinks=styled.div`
 width: 50%;
@@ -32,23 +32,3 @@ cursor: pointer;
 text-decoration: none;
 color: black;
 `
-// .navigation {
- 
-
-//   .logo-container {
-//     
-//   }
-
-//   .nav-links-container {
-//    
-
-//     .nav-link {
-//       
-
-//     }
-//   }
-//   a {
-//     text-decoration: none;
-//     color: black;
-//   }
-// }
